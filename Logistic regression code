@@ -46,10 +46,10 @@ confusionMatrix(factor(predicted_classes), factor(testing_set$Playoffs))
 
 summary(model)
 
+#Now with a Modified 2020 season
 
 
-
-modData <- read.csv("https://raw.githubusercontent.com/JordanNewton22/NHLsalaryDistributionPerformacePredictions/main/NHL%20Standings%20and%20Contracts%20(1).csv")
+modData <- read.csv("https://raw.githubusercontent.com/JordanNewton22/NHLsalaryDistributionPerformacePredictions/main/Modified%202020.csv")
 
 
 summary(modData)
@@ -79,3 +79,38 @@ predicted2_classes <- ifelse(predictions2 > 0.5, 1, 0)
 confusionMatrix(factor(predicted2_classes), factor(testing2_set$Playoffs))
 
 summary(model2)
+
+#Without 2020 season
+
+lData <- read.csv("https://raw.githubusercontent.com/JordanNewton22/NHLsalaryDistributionPerformacePredictions/main/NHL%20Standings%20and%20Contracts%20(1).csv")
+
+summary(lData)
+player3_Data = lData[4:5]
+player3_Data
+
+
+# Split data into training and testing sets
+split <- sample.split(player3_Data, SplitRatio = 0.7)  # 70% training, 30% testing
+training3_set <- subset(player3_Data, split == TRUE)
+testing3_set <- subset(player3_Data, split == FALSE)
+
+
+training3_set
+
+# Fit logistic regression model on training set
+model3 <- glm(Playoffs ~ Percent, data = training3_set, family = "binomial")
+
+# Make predictions on the testing set
+predictions3 <- predict(model, testing3_set, type = "response")
+
+# Convert probabilities to binary predictions (e.g., using 0.5 as a threshold)
+predicted3_classes <- ifelse(predictions3 > 0.5, 1, 0)
+
+# Confusion matrix
+
+confusionMatrix(factor(predicted3_classes), factor(testing3_set$Playoffs))
+
+summary(model3)
+
+
+
