@@ -1,3 +1,6 @@
+# Load necessary package
+install.packages('caTools')
+library(caTools)
 install.packages('aod')
 library(tidymodels)
 library(readr)
@@ -11,10 +14,6 @@ nhlData <- read.csv("https://raw.githubusercontent.com/JordanNewton22/NHLsalaryD
 summary(nhlData)
 player_Data = nhlData[4:5]
 player_Data
-
-# Load necessary package
-install.packages('caTools')
-library(caTools)
 
 # Split data into training and testing sets
 set.seed(123)  # for reproducibility
